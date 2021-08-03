@@ -9,31 +9,25 @@ client.on('ready', () => {
 
 client.on('message', msg => {
     if(!msg.author.bot) {
-        if(msg.content.length > 180) {
-            var splitMessageArray = msg.content.split(' ');
-            var readableString = '';
-            var readableStringsArray = [];
-    
-            splitMessageArray.forEach(function(token) {
-                if(readableString.length >= 180) {
-                    readableStringsArray.push(readableString);
-                    readableString = '';
-                }
-                readableString = readableString.concat(token + ' ');
-            });
+        let splitMessageArray = msg.content.split(' '),
+            readableString = '',
+            readableStringsArray = [];
 
-            readableStringsArray.push(readableString);
-    
-            readableStringsArray.forEach(function(readableString) {
-                msg.channel.send(readableString, {
-                    tts: true
-                });
-            });
-        } else {
-            msg.channel.send(msg.content, {
+        splitMessageArray.forEach(function(token) {
+            if(readableString.length >= 150) {
+                readableStringsArray.push(readableString);
+                readableString = '';
+            }
+            readableString = readableString.concat(token + ' ');
+        });
+
+        readableStringsArray.push(readableString);
+
+        readableStringsArray.forEach(function(readableString) {
+            msg.channel.send(readableString, {
                 tts: true
             });
-        }
+        });
     }
 });
 
